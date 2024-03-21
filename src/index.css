@@ -15,7 +15,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
+a{
+  text-decoration: none;
+  color: inherit;
+}
 #pokemons{
   width: 50%;
   margin: 0 auto;
@@ -85,4 +88,43 @@ code {
   width: fit-content;
   margin-right: 10px;
   font-size: .8rem;
+}
+
+/* 
+  Pokemon details
+*/
+#pokemon{
+  width: 50%;
+  margin: 0 auto;
+  border-radius: 8px;
+  border: solid rgb(255 255 255 / 20%) 1px;
+  background-color: white;
+  padding: 40px;
+  height: 77vh;
+  overflow-y: auto;
+}
+#pokemon h1{
+  text-transform: capitalize;
+}
+#pokemon .container{
+  display: flex;
+}
+#pokemon .container div:first-child{
+  width: 50%;
+}
+#pokemon .container div:first-child img{
+  width: 100%;
+}
+
+#pokemon .container dl {
+  padding: 0.5em;
+}
+#pokemon .container dt {
+  float: left;
+  clear: left;
+  font-weight: bold;
+}
+#pokemon .container dd {
+  float: right;
+  clear: right;
 }
