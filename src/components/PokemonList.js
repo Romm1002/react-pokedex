@@ -27,7 +27,6 @@ const PokemonList = () => {
                     }
                 }));
                 setPokemons(pokemonDataList);
-                console.log(pokemonDataList)
                 setLoading(false)
             } catch (error) {
                 console.error('Error fetching pokemons:', error);
