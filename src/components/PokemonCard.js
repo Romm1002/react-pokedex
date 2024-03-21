@@ -1,16 +1,24 @@
-const PokemonCard = ({ pokemon }) => {
+const PokemonCard = ({ pokemon, setPokedexData }) => {
 
-    // Ajouter le Pokémon au Pokédex (localStorage)
     const addPokedex = () => {
-        // Récupération des données actuelles du Pokédex depuis le localStorage
         const currentPokedexData = localStorage.getItem('pokedexData');
         let pokedexData = currentPokedexData ? JSON.parse(currentPokedexData) : [];
 
-        // Ajout du Pokémon à la liste du Pokédex
         pokedexData.push(pokemon);
 
-        // Mise à jour du localStorage avec les données du Pokédex mises à jour
         localStorage.setItem('pokedexData', JSON.stringify(pokedexData));
+    };
+
+    
+    const removeFromPokedex = (pokemonToRemove) => {
+        const pokedexData = JSON.parse(localStorage.getItem('pokedexData'));
+        
+        const updatedPokedexData = pokedexData.filter(p => p.name !== pokemonToRemove.name);
+
+        setPokedexData(updatedPokedexData);
+
+        localStorage.setItem('pokedexData', JSON.stringify(updatedPokedexData));
+
     };
 
     return (
@@ -21,7 +29,11 @@ const PokemonCard = ({ pokemon }) => {
                 <ul>
                     {pokemon.types.map((type, index) => <li key={index}>{type.type.name}</li>)}
                 </ul>
-                <button onClick={addPokedex}>Ajouter au Pokédex</button>
+                {setPokedexData === undefined ?(
+                    <button onClick={addPokedex}>Ajouter au Pokédex</button>
+                ) : (
+                    <button onClick={() => removeFromPokedex(pokemon)}>Retirer du Pokédex</button>
+                )}
             </div>
         </div>
     );
