@@ -41,18 +41,22 @@ const Pokedex = () => {
         setSearchResults(results);
     };
 
+
+
     return (
         <div>
             <SearchBar onSearch={handleSearch} />
-            {searchResults.length > 0 ? (
-                searchResults.map((pokemon, index) => (
-                    <PokedexCard key={index} pokemon={pokemon} removeFromPokedex={removeFromPokedex} />
-                ))
-            ) : (
-                pokedexData.map((pokemon, index) => (
-                    <PokedexCard key={index} pokemon={pokemon} removeFromPokedex={removeFromPokedex} />
-                ))
-            )}
+            <div className='pokedex-pokemons'>
+                {searchResults.length > 0 ? (
+                    searchResults.map((pokemon, index) => (
+                        <PokedexCard key={index} pokemon={pokemon} removeFromPokedex={removeFromPokedex} />
+                    ))
+                ) : (
+                    pokedexData.map((pokemon, index) => (
+                        <PokedexCard key={index} pokemon={pokemon} removeFromPokedex={removeFromPokedex} />
+                    ))
+                )}
+            </div>
         </div>
     );
 }
