@@ -1,22 +1,13 @@
-// SearchBar.js
-import React, { useState } from 'react';
-
-const SearchBar = ({ onSearch }) => {
-    const [searchTerm, setSearchTerm] = useState('');
+const SearchBar = ({ value, onSearch }) => {
 
     const handleChange = event => {
-        setSearchTerm(event.target.value);
+        onSearch(event.target.value)
     }
 
-    const handleSubmit = event => {
-        event.preventDefault();
-        onSearch(searchTerm);
-    }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input type="text" value={searchTerm} onChange={handleChange} />
-            <button type="submit">Rechercher</button>
+        <form>
+            <input type="text" value={value} placeholder='Rechercher' onChange={handleChange} />
         </form>
     );
 }

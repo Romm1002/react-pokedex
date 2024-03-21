@@ -9,7 +9,7 @@ const PokemonList = () => {
   const [loading, setLoading] = useState(true);
   const limit = 20;
   const [searchResults, setSearchResults] = useState([]);
-
+  const [searchTerm, setSearchTerm] = useState('');
   useEffect(() => {
     setLoading(true);
     const fetchData = async () => {
@@ -35,7 +35,6 @@ const PokemonList = () => {
         );
         pokemonDataList.sort((a, b) => a.id - b.id);
         setPokemons(pokemonDataList);
-        setSearchResults('')
         setLoading(false)
       } catch (error) {
         console.error("Error fetching pokemons:", error);
@@ -44,22 +43,26 @@ const PokemonList = () => {
     fetchData();
   }, [page]);
 
-  const handleSearch = (searchTerm) => {
+  useEffect(() => {
+
     const results = pokemons.filter((pokemon) =>
       pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setSearchResults(results);
-  };
+  }, [searchTerm, pokemons]) 
 
   if (loading) {
     return <p>Chargement...</p>;
   } else {
     return (
       <div className="pokemons">
-        <SearchBar onSearch={handleSearch} />
-        {searchResults.length > 0
-          ? searchResults.map((pokemon, index) => <PokemonCard pokemon={pokemon} key={index} />)
-          : pokemons.map((pokemon, index) => <PokemonCard pokemon={pokemon} key={index}  />)}
+        <SearchBar value ={searchTerm} onSearch={setSearchTerm} />
+        {searchTerm
+          ? searchResults.length > 0 
+              ? searchResults.map((pokemon, index) => <PokemonCard pokemon={pokemon} key={index}  />)
+              : <>Aucun pokémon ne corréspond</>
+          : pokemons.map((pokemon, index) => <PokemonCard pokemon={pokemon} key={index}  />)
+        }
         <div>
           <button onClick={() => setPage(page - 1)}>Page précédente</button>
           {page}
