@@ -12,6 +12,14 @@ const Pokedex = () => {
     }
   }, []);
 
+  const deleteAll = () => {
+    // Supprimer toutes les données du localStorage liées au Pokédex
+    localStorage.removeItem("pokedexData");
+    // Mettre à jour l'état pour vider le Pokédex
+    setPokedexData([]);
+  };
+  
+
   return (
     <div>
       <div className="pokedex-pokemons">
@@ -22,6 +30,7 @@ const Pokedex = () => {
             setPokedexData={setPokedexData}
           />
         ))}
+        <button onClick={deleteAll}>Supprimer tout le pokédex</button>
       </div>
     </div>
   );
