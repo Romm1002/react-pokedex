@@ -3,7 +3,7 @@ import Pokedex from '../components/Pokedex';
 
 const PokedexPage = () => {
     return (
-        <div>
+        <div id='pokedex'>
             <h1>Mon Pokédex</h1>
             <Pokedex />
         </div>
