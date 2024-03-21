@@ -6,7 +6,7 @@ import PokemonDetails from '../components/PokemonDetails';
 const PokemonPage = () => {
     const { id } = useParams();
     return (
-        <div id='pokemon'>
+        <div>
             <PokemonDetails id={id}/>
         </div>
     );

@@ -44,7 +44,7 @@ const PokemonList = () => {
         )
     } else {
         return (
-            <div>
+            <div className='pokemons'>
                 {pokemons.map((pokemon, index) => (
                     <Link to={`/${pokemon.id}`}>
                         <PokemonCard key={index} pokemon={pokemon} />
