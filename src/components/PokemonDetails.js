@@ -32,7 +32,7 @@ function PokemonDetails({id}) {
           : typeColors[types[0].type.name];
       };
     useEffect(() => {
-        const _ = (async () => {
+        const fetchData = async () => {
             try {
                 const {data: pokemonData} = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
                 const {data: pokemonFormData} = await axios.get(pokemonData.forms[0].url);
@@ -42,10 +42,16 @@ function PokemonDetails({id}) {
             } catch (error) {
                 console.error('Error fetching pokemons:', error);
             }
-        })();
-    },[])
+        };
+
+        fetchData(); // Appel de la fonction fetchData
+    }, [id]); // Ajout de 'id' dans le tableau de dépendances
+
+    // Ignorer l'avertissement pour exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     if (!pokemon) {
-        <div>Chargement...</div>
+        return <div>Chargement...</div>; // Ajout du return
     } else {
         return ( 
             <div id='pokemon' style={{backgroundColor: getBackgroundColor(pokemon.types)}}>
@@ -53,7 +59,7 @@ function PokemonDetails({id}) {
                 <h1>{pokemon.name}</h1>
                 <div class="container">
                     <div>
-                        <img src={pokemon.sprites.front_default} />
+                        <img src={pokemon.sprites.front_default} alt="" />
                     </div>
                     <div className="card">
                         <h2>Types</h2>

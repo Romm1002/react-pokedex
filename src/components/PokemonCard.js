@@ -1,18 +1,21 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const PokemonCard = ({ pokemon, setPokedexData }) => {
   const [isInPokedex, setIsInPokedex] = useState(false);
 
   const addPokedex = () => {
-    if (isInPokedex === false){
-        const currentPokedexData = localStorage.getItem("pokedexData");
-        let pokedexData = currentPokedexData ? JSON.parse(currentPokedexData) : [];
-    
-        pokedexData.push(pokemon);
-    
-        localStorage.setItem("pokedexData", JSON.stringify(pokedexData));
+    if (isInPokedex === false) {
+      const currentPokedexData = localStorage.getItem("pokedexData");
+      let pokedexData = currentPokedexData
+        ? JSON.parse(currentPokedexData)
+        : [];
 
-        setIsInPokedex(true);
+      pokedexData.push(pokemon);
+
+      localStorage.setItem("pokedexData", JSON.stringify(pokedexData));
+
+      setIsInPokedex(true);
     }
   };
 
@@ -61,9 +64,12 @@ const PokemonCard = ({ pokemon, setPokedexData }) => {
 
   return (
     <div className="card" style={cardStyle}>
-      <h3>
-        {pokemon.name} #{pokemon.id}
-      </h3>
+      <Link to={`/${pokemon.id}`}>
+        <h3>
+          {pokemon.name} #{pokemon.id}
+        </h3>
+      </Link>
+
       <ul>
         {pokemon.types.map((type, index) => (
           <li key={index}>{type.type.name}</li>
