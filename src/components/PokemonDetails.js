@@ -44,14 +44,13 @@ function PokemonDetails({id}) {
             }
         };
 
-        fetchData(); // Appel de la fonction fetchData
-    }, [id]); // Ajout de 'id' dans le tableau de dépendances
+        fetchData();
+    }, [id]);
 
-    // Ignorer l'avertissement pour exhaustive-deps
     // eslint-disable-next-line react-hooks/exhaustive-deps
 
     if (!pokemon) {
-        return <div>Chargement...</div>; // Ajout du return
+        return <div>Chargement...</div>;
     } else {
         return ( 
             <div>
