@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import PokemonCard from './PokemonCard';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import SearchBar from "./SearchBar";
+
 
 const PokemonList = () => {
     const [pokemons, setPokemons] = useState([]);
     const [page, setPage] = useState(0);
     const [loading, setLoading] = useState(true);
     const limit = 20;
+  const [searchResults, setSearchResults] = useState([]);
 
     useEffect(() => {
         setLoading(true);
@@ -31,10 +34,16 @@ const PokemonList = () => {
                 setPokemons(pokemonDataList);
                 setLoading(false)
             } catch (error) {
-                console.error('Error fetching pokemons:', error);
+              console.error("Error fetching pokemons:", error);
             }
-        };
-
+          })
+        );
+        setPokemons(pokemonDataList);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching pokemons:", error);
+      }
+    };
         fetchData();
     }, [page]);
 
@@ -58,6 +67,46 @@ const PokemonList = () => {
             </div>
         );
     }
-}
+  };
+
+  // Fonction recherche
+  const handleSearch = (searchTerm) => {
+    const results = pokemons.filter((pokemon) =>
+      pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setSearchResults(results);
+  };
+
+  if (loading) {
+    return <p>Chargement...</p>;
+  } else {
+    return (
+      <div>
+        <SearchBar onSearch={handleSearch} />
+        <div className="pokemons">
+          {searchResults.length > 0
+            ? searchResults.map((pokemon, index) => (
+                <PokemonCard
+                  key={index}
+                  pokemon={pokemon}
+                  setPokedexData={setPokemons}
+                />
+              ))
+            : pokemons.map((pokemon, index) => (
+                <PokemonCard
+                  key={index}
+                  pokemon={pokemon}
+                  setPokedexData={setPokemons}
+                />
+              ))}
+          <div>
+            <button onClick={handlePreviousPage}>Page précédente</button>
+            <button onClick={handleNextPage}>Page suivante</button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+};
 
 export default PokemonList;
