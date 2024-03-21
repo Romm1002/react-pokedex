@@ -76,7 +76,7 @@ const PokemonCard = ({ pokemon, setPokedexData }) => {
           Retirer du Pokédex
         </button>
       )}
-      <img src={pokemon.forms.sprites.front_default} alt={pokemon.name} />
+      <img src={pokemon.sprites.front_default} alt={pokemon.name} />
     </div>
   );
 };
