@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import PokedexCard from './PokedexCard';
+import PokemonCard from './PokemonCard';
 import SearchBar from './SearchBar';
 
 const Pokedex = () => {
@@ -17,19 +17,6 @@ const Pokedex = () => {
         }
     }, []);
 
-    // Fonction pour retirer un Pokémon du Pokédex
-    const removeFromPokedex = (pokemonToRemove) => {
-        // Filtrer le Pokémon à retirer du Pokédex
-        const updatedPokedexData = pokedexData.filter(p => p.name !== pokemonToRemove.name);
-
-        // Mettre à jour l'état local avec les données du Pokédex mises à jour
-        setPokedexData(updatedPokedexData);
-
-        // Mise à jour du localStorage avec les données du Pokédex mises à jour
-        localStorage.setItem('pokedexData', JSON.stringify(updatedPokedexData));
-
-        // Mettre à jour l'état ou effectuer toute autre logique nécessaire après le retrait du Pokémon
-    };
 
     // Fonction de recherche
     const handleSearch = (searchTerm) => {
@@ -49,11 +36,11 @@ const Pokedex = () => {
             <div className='pokedex-pokemons'>
                 {searchResults.length > 0 ? (
                     searchResults.map((pokemon, index) => (
-                        <PokedexCard key={index} pokemon={pokemon} removeFromPokedex={removeFromPokedex} />
+                        <PokemonCard key={index} pokemon={pokemon} setPokedexData={setPokedexData} />
                     ))
                 ) : (
                     pokedexData.map((pokemon, index) => (
-                        <PokedexCard key={index} pokemon={pokemon} removeFromPokedex={removeFromPokedex} />
+                        <PokemonCard key={index} pokemon={pokemon} setPokedexData={setPokedexData} />
                     ))
                 )}
             </div>
