@@ -44,19 +44,17 @@ function PokemonDetails({id}) {
             }
         };
 
-        fetchData(); // Appel de la fonction fetchData
-    }, [id]); // Ajout de 'id' dans le tableau de dépendances
+        fetchData();
+    }, [id]); 
 
-    // Ignorer l'avertissement pour exhaustive-deps
-    // eslint-disable-next-line react-hooks/exhaustive-deps
 
     if (!pokemon) {
-        return <div>Chargement...</div>; // Ajout du return
+        return <div>Chargement...</div>;
     } else {
         return ( 
             <div>
                 <Link onClick={() => navigate(-1)}>Retour</Link>
-                <h1>{pokemon.name}</h1>
+                <h1>{pokemon.name} #{pokemon.id}</h1>
                 <div class="container">
                     <div>
                         <img src={pokemon.sprites.front_default} alt="" />

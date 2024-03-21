@@ -27,6 +27,7 @@ const PokemonList = () => {
         }));
         pokemonDataList.sort((a, b) => a.id - b.id);
         setPokemons(pokemonDataList);
+        setSearchResults('')
         setLoading(false)
       } catch (error) {
         console.error("Error fetching pokemons:", error);
@@ -51,13 +52,15 @@ const PokemonList = () => {
       <div className='pokemons'>
         <SearchBar onSearch={handleSearch} />
         {searchResults.length > 0
-          ? searchResults.map((pokemon) => (
+          ? searchResults.map((pokemon, index) => (
               <PokemonCard
+                key={index}
                 pokemon={pokemon}
               />
           ))
-          : pokemons.map((pokemon) => (
+          : pokemons.map((pokemon, index) => (
               <PokemonCard
+                key={index}
                 pokemon={pokemon}
               />
           ))
