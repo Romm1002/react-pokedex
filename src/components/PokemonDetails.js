@@ -48,14 +48,14 @@ function PokemonDetails({id}) {
         <div>Chargement...</div>
     } else {
         return ( 
-            <div id='pokemon' style={{backgroundColor: getBackgroundColor(pokemon.types)}}>
+            <div>
                 <Link onClick={() => navigate(-1)}>Retour</Link>
                 <h1>{pokemon.name}</h1>
                 <div class="container">
                     <div>
                         <img src={pokemon.sprites.front_default} />
                     </div>
-                    <div className="card">
+                    <div className="card" style={{backgroundColor: getBackgroundColor(pokemon.types)}}>
                         <h2>Types</h2>
                         <ul>
                             {pokemon.types.map((type, index) => <li key={index}>{type.type.name}</li>)}

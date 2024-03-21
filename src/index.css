@@ -97,7 +97,6 @@ a{
   width: 50%;
   margin: 0 auto;
   border-radius: 8px;
-  border: solid rgb(255 255 255 / 20%) 1px;
   background-color: white;
   padding: 40px;
   height: 77vh;
@@ -108,6 +107,11 @@ a{
 }
 #pokemon .container{
   display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+#pokemon .container .card{
+  float: right;
 }
 #pokemon .container div:first-child{
   width: 50%;
