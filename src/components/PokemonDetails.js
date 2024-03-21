@@ -51,8 +51,6 @@ function PokemonDetails({ id }) {
     fetchData();
   }, [id]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-
   if (!pokemon) {
     return <div>Chargement...</div>;
   } else {
