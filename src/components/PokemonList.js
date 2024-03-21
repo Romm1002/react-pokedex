@@ -51,7 +51,7 @@ const PokemonList = () => {
         )
     } else {
         return (
-            <div>
+            <div className='pokemons'>
                 {pokemons.map((pokemon, index) => (
                     <PokemonCard key={index} pokemon={pokemon} />
                 ))}
