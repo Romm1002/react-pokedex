@@ -35,12 +35,14 @@ const PokemonCard = ({ pokemon }) => {
 
     return (
         <div>
-            {pokemonData && (
-                <div>
-                    <h3>{pokemonData.name}</h3>
-                    <button onClick={addPokedex}>Ajouter au pokédex</button>
-                </div>
-            )}
+            <img src={pokemon.forms.sprites.front_default}/>
+            <div>
+                <h3>{pokemon.name} #{pokemon.id}</h3>
+                <ul>
+                    {pokemon.types.map((type, index) => <li key={index}>{type.type.name}</li>)}
+                </ul>
+                <button onClick={addPokedex}>Ajouter au Pokédex</button>
+            </div>
         </div>
     );
 }
