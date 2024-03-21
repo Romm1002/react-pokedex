@@ -1,5 +1,4 @@
 const PokemonCard = ({ pokemon, setPokedexData }) => {
-
     const addPokedex = () => {
         const currentPokedexData = localStorage.getItem('pokedexData');
         let pokedexData = currentPokedexData ? JSON.parse(currentPokedexData) : [];
