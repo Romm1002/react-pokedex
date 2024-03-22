@@ -18,6 +18,10 @@ body {
   height: 100vh;
 }
 
+.btn-warning{
+  width: 100% !important;
+}
+
 .pokemons{
   background-color: #fff;
   margin: 0 auto;
@@ -49,6 +53,9 @@ body {
   /* border: 1px solid #000; */
 }
 
+#link{
+  text-decoration:none;
+}
 .card{
   border-radius: 0 !important;
   padding: 20px;
@@ -57,25 +64,30 @@ body {
   text-decoration: none;
   color: #000;
 }
-.card a span::first-letter{
+.card span::first-letter{
   text-transform: uppercase;
 }
-.card a h3{
+.card h3{
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 1.4rem;
+  margin-bottom: 0;
 }
-.card a h3 #id{
+.card h3 #id{
   font-size: 1rem;
 }
 .card ul{
   list-style: none;
   display: flex;
   align-items: center;
+  padding: 0;
+  margin: 10px 0 0 0;
 }
 .card ul li{
   background-color: rgba(255, 255, 255, .4);
+  padding: 3px 10px;
+  margin-right: 10px;
 }
 /* #top{
   position: absolute;

@@ -1,31 +1,43 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const PokemonCard = ({ pokemon, setPokedexData }) => {
+const PokemonCard = ({ pokemon }) => {
   const [isInPokedex, setIsInPokedex] = useState(false);
 
-  const addPokedex = () => {
+  useEffect(() => {
     const currentPokedexData = localStorage.getItem("pokedexData");
-    let pokedexData = currentPokedexData ? JSON.parse(currentPokedexData) : [];
-  
+    if (currentPokedexData) {
+      const pokedexData = JSON.parse(currentPokedexData);
+      const isInPokedex = pokedexData.some(
+        (p) => p.id === pokemon.id
+      );
+      setIsInPokedex(isInPokedex);
+    }
+  }, [pokemon.id]);
+
+  const addPokedex = (event) => {
+    event.preventDefault();
+    const currentPokedexData = localStorage.getItem("pokedexData");
+    const pokedexData = currentPokedexData ? JSON.parse(currentPokedexData) : [];
+
     if (!isInPokedex) {
-      pokedexData.push(pokemon);
-      localStorage.setItem("pokedexData", JSON.stringify(pokedexData));
+      const updatedPokedexData = [...pokedexData, pokemon];
+      localStorage.setItem("pokedexData", JSON.stringify(updatedPokedexData));
       setIsInPokedex(true);
     }
   };
+
+  const removeFromPokedex = (event) => {
+    event.preventDefault();
+    const currentPokedexData = localStorage.getItem("pokedexData");
+    const pokedexData = currentPokedexData ? JSON.parse(currentPokedexData) : [];
   
-
-  const removeFromPokedex = (pokemonToRemove) => {
-    const pokedexData = JSON.parse(localStorage.getItem("pokedexData"));
-
     const updatedPokedexData = pokedexData.filter(
-      (p) => p.name !== pokemonToRemove.name
+      (p) => p.id !== pokemon.id
     );
-
-    setPokedexData(updatedPokedexData);
-
+  
     localStorage.setItem("pokedexData", JSON.stringify(updatedPokedexData));
+    setIsInPokedex(false);
   };
 
   const getBackgroundColor = (types) => {
@@ -60,27 +72,32 @@ const PokemonCard = ({ pokemon, setPokedexData }) => {
   };
 
   return (
-    <div className="card" style={cardStyle}>
-      <Link to={`/${pokemon.id}`}>
+    <Link to={`/${pokemon.id}`} id="link">
+      <div className="card" style={cardStyle}>
         <h3>
-          <span>{pokemon.name}</span><span id="id">#{pokemon.id}</span>
+          <span>{pokemon.name}</span>
+          <span id="id">#{pokemon.id}</span>
         </h3>
-      </Link>
 
-      <ul>
-        {pokemon.types.map((type, index) => (
-          <li key={index}>{type.type.name}</li>
-        ))}
-      </ul>
-      {setPokedexData === undefined ? (
-        <button onClick={addPokedex}>Ajouter au Pokédex</button>
-      ) : (
-        <button onClick={() => removeFromPokedex(pokemon)}>
-          Retirer du Pokédex
-        </button>
-      )}
-      <img src={pokemon.sprites.front_default} alt={pokemon.name} />
-    </div>
+        <ul>
+          {pokemon.types.map((type, index) => (
+            <li key={index}>{type.type.name}</li>
+          ))}
+        </ul>
+        <img
+          src={pokemon.sprites.front_default}
+          alt={pokemon.name}
+          width="100px"
+        />
+        {!isInPokedex ? (
+          <button onClick={addPokedex} className="btn btn-success">Ajouter au Pokédex</button>
+        ) : (
+          <button onClick={removeFromPokedex} className="btn btn-danger">
+            Retirer du Pokédex
+          </button>
+        )}
+      </div>
+    </Link>
   );
 };
 

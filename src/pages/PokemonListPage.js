@@ -12,9 +12,6 @@ const PokemonListPage = () => {
                 </Link>
             </div>
             <PokemonList />
-            {/* <a href="#title" id="top">
-                <img src="https://cdn.icon-icons.com/icons2/1369/PNG/512/-keyboard-arrow-up_90748.png" alt="Retour en haut" title="Revenir au début" width="50px" />
-            </a> */}
         </div>
     );
 }
