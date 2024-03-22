@@ -12,8 +12,7 @@ const PokemonList = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchParams] = useSearchParams();
-  const page = parseInt(searchParams.get("page"));
-
+  const page = isNaN(searchParams.get("page")) ? 0 : parseInt(searchParams.get("page"));
   useEffect(() => {
     setLoading(true);
     const fetchData = async () => {
