@@ -16,28 +16,30 @@ const PokemonList = () => {
   const page = isNaN(parseInt(searchParams.get("page"))) ? 0 : parseInt(searchParams.get("page"));
 
   useEffect(() => {
-    const _ = ( async () =>{
+    const fetchData = async () => {
       try {
-        let next = 'https://pokeapi.co/api/v2/pokemon?limit=500&offset=0'
+        let next = 'https://pokeapi.co/api/v2/pokemon?limit=500&offset=0';
         let i = 0;
         let pokemonsData = [];
         while (next !== null) {
-          if(i >= 5){
-            setPokemonUrls(pokemonsData)
-            throw(new Error('too many requests!'))
+          if (i >= 5) {
+            setPokemonUrls(pokemonsData);
+            throw (new Error('trop de requêtes!'));
           }
           i++;
-          const {data} = await axios.get(next);
+          const { data } = await axios.get(next);
           next = data.next;
-          pokemonsData = pokemonsData.concat(data.results)
+          pokemonsData = pokemonsData.concat(data.results);
         }
-        setPokemonUrls(pokemonsData)
-        setPokemonPageUrls(pokemonsData)
+        setPokemonUrls(pokemonsData);
+        setPokemonPageUrls(pokemonsData);
       } catch (error) {
-        console.error("Error fetching pokemons:", error);
+        console.error("Erreur lors de la récupération des pokémons:", error);
       }
-    })();
-  }, [])
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -48,40 +50,40 @@ const PokemonList = () => {
           urls.map(pokemon => axios.get(pokemon.url))
         );
         setPokemons(response.map(data => data.data));
-        setLoading(false)
+        setLoading(false);
       } catch (error) {
-        console.error("Error fetching pokemons:", error);
+        console.error("Erreur lors de la récupération des pokémons:", error);
       }
     };
     fetchData();
   }, [page, pokemonPageUrls]);
 
   useEffect(() => {
-    const results = pokemonUrls.filter((pokemon) =>{
-      return pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
-    }
-    );
+    const results = pokemonUrls.filter((pokemon) => {
+      return pokemon.name.toLowerCase().includes(searchTerm.toLowerCase());
+    });
     setPokemonPageUrls(results);
-  }, [searchTerm, pokemonUrls]) 
+  }, [searchTerm, pokemonUrls]);
+
+  // Calcul du nombre total de pages
+  const totalPages = Math.ceil(pokemonPageUrls.length / pageSize);
 
   return (
     <div>
       <div className="searchBar">
-        <SearchBar value ={searchTerm} onSearch={setSearchTerm} />
+        <SearchBar value={searchTerm} onSearch={setSearchTerm} />
       </div>
-      {loading
-      ? <p>Chargement...</p>
-      : <div className="pokemons-list">
-          {searchTerm && pokemons.length === 0
-            ? <p>Aucun pokémon ne corréspond</p> 
-            : pokemons.length === 0
-              ? <p>Un problème est survenue</p> 
-              : pokemons.map((pokemon, index) => <PokemonCard pokemon={pokemon} key={index}  />)
+      {loading ? <p>Chargement...</p> : (
+        <div className="pokemons-list">
+          {searchTerm && pokemons.length === 0 ? <p>Aucun pokémon ne correspond</p> :
+            pokemons.length === 0 ? <p>Un problème est survenu</p> :
+              pokemons.map((pokemon, index) => <PokemonCard pokemon={pokemon} key={index} />)
           }
-          <Pagination page={page} />
+          <Pagination page={page} totalPages={totalPages} />
         </div>
-      }
+      )}
     </div>
   );
 };
+
 export default PokemonList;

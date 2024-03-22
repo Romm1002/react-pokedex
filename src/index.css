@@ -155,7 +155,7 @@ body {
 /* 
   Pokemon details
 */
-/* #pokemon{
+#pokemon{
   width: 50%;
   margin: 0 auto;
   border-radius: 8px;
@@ -193,4 +193,4 @@ body {
 #pokemon .container dd {
   float: right;
   clear: right;
-} */
+}
