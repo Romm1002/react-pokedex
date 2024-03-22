@@ -61,7 +61,7 @@ const Pokedex = () => {
           )
         ) : (
           pokedexData.slice(page * pageSize, page * pageSize + pageSize).map((pokemon) => (
-            <PokemonCard pokemon={pokemon} key={pokemon.id} />
+            <PokemonCard pokemon={pokemon} key={pokemon.id} setPokedexData={setPokedexData} />
           ))
         )}
       </div>
