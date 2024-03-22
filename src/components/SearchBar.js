@@ -7,7 +7,7 @@ const SearchBar = ({ value, onSearch }) => {
 
     return (
         <div>
-            <form id="searchBar">
+            <form id="searchBar" onSubmit={e => e.preventDefault()}>
                 <input type="text" value={value} placeholder='Rechercher un pokémon...' onChange={handleChange} className="form-control" />
             </form>
             <hr></hr>
