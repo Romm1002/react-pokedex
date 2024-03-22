@@ -5,23 +5,16 @@ const PokemonCard = ({ pokemon, setPokedexData }) => {
   const [isInPokedex, setIsInPokedex] = useState(false);
 
   const addPokedex = () => {
+    const currentPokedexData = localStorage.getItem("pokedexData");
+    let pokedexData = currentPokedexData ? JSON.parse(currentPokedexData) : [];
+  
     if (!isInPokedex) {
-      const currentPokedexData = localStorage.getItem("pokedexData");
-      let pokedexData = currentPokedexData
-        ? JSON.parse(currentPokedexData)
-        : [];
-
-      // Vérifier si le Pokémon n'est pas déjà dans le Pokédex
-      const isAlreadyInPokedex = pokedexData.some((p) => p.id === pokemon.id);
-
-      if (!isAlreadyInPokedex) {
-        pokedexData.push(pokemon);
-
-        localStorage.setItem("pokedexData", JSON.stringify(pokedexData));
-        setIsInPokedex(true);
-      }
+      pokedexData.push(pokemon);
+      localStorage.setItem("pokedexData", JSON.stringify(pokedexData));
+      setIsInPokedex(true);
     }
   };
+  
 
   const removeFromPokedex = (pokemonToRemove) => {
     const pokedexData = JSON.parse(localStorage.getItem("pokedexData"));
