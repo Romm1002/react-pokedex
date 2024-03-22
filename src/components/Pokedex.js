@@ -20,7 +20,7 @@ const Pokedex = () => {
 
   return (
     <div>
-      <div className="pokedex-pokemons">
+      <div className="pokemons">
         {pokedexData.map((pokemon, index) => (
           <PokemonCard
             key={index}

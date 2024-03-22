@@ -1,6 +1,7 @@
 // App.js
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import PokemonListPage from './pages/PokemonListPage';
 import PokedexPage from './pages/PokedexPage';
