@@ -57,15 +57,19 @@ const PokemonList = () => {
     return <p>Chargement...</p>;
   } else {
     return (
-      <div className="pokemons">
-        <SearchBar value ={searchTerm} onSearch={setSearchTerm} />
-        {searchTerm
-          ? searchResults.length > 0 
-              ? searchResults.map((pokemon, index) => <PokemonCard pokemon={pokemon} key={index}  />)
-              : <>Aucun pokémon ne corréspond</>
-          : pokemons.map((pokemon, index) => <PokemonCard pokemon={pokemon} key={index}  />)
-        }
-        <Pagination page={page} />
+      <div>
+        <div className="searchBar">
+          <SearchBar value ={searchTerm} onSearch={setSearchTerm} />
+        </div>
+        <div className="pokemons-list">
+          {searchTerm
+            ? searchResults.length > 0 
+                ? searchResults.map((pokemon, index) => <PokemonCard pokemon={pokemon} key={index}  />)
+                : <>Aucun pokémon ne corréspond</>
+            : pokemons.map((pokemon, index) => <PokemonCard pokemon={pokemon} key={index}  />)
+          }
+          <Pagination page={page} />
+        </div>
       </div>
     );
   }

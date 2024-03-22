@@ -63,7 +63,7 @@ const PokemonCard = ({ pokemon, setPokedexData }) => {
     <div className="card" style={cardStyle}>
       <Link to={`/${pokemon.id}`}>
         <h3>
-          {pokemon.name} #{pokemon.id}
+          <span>{pokemon.name}</span><span id="id">#{pokemon.id}</span>
         </h3>
       </Link>
 

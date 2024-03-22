@@ -6,9 +6,12 @@ const SearchBar = ({ value, onSearch }) => {
 
 
     return (
-        <form>
-            <input type="text" value={value} placeholder='Rechercher' onChange={handleChange} />
-        </form>
+        <div>
+            <form id="searchBar">
+                <input type="text" value={value} placeholder='Rechercher un pokémon...' onChange={handleChange} className="form-control" />
+            </form>
+            <hr></hr>
+        </div>
     );
 }
 
