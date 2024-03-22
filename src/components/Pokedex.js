@@ -45,8 +45,8 @@ const Pokedex = () => {
             <div>Aucun Pokémon</div>
           )
         ) : (
-          pokedexData.map((pokemon) => (
-            <PokemonCard pokemon={pokemon} />
+          pokedexData.map((pokemon, index) => (
+            <PokemonCard key={index} pokemon={pokemon} setPokedexData={setPokedexData} />
           ))
         )}
       </div>

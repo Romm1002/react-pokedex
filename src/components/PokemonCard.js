@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const PokemonCard = ({ pokemon }) => {
+const PokemonCard = ({ pokemon, setPokedexData }) => {
   const [isInPokedex, setIsInPokedex] = useState(false);
 
   useEffect(() => {
@@ -38,6 +38,8 @@ const PokemonCard = ({ pokemon }) => {
   
     localStorage.setItem("pokedexData", JSON.stringify(updatedPokedexData));
     setIsInPokedex(false);
+    if(setPokedexData)
+      setPokedexData(updatedPokedexData)
   };
 
   const getBackgroundColor = (types) => {
