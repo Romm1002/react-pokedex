@@ -7,10 +7,10 @@ import { useSearchParams } from "react-router-dom";
 
 const PokemonList = () => {
   const [pokemonUrls, setPokemonUrls] = useState([]);
+  const [pokemonPageUrls, setPokemonPageUrls] = useState([]);
   const [pokemons, setPokemons] = useState([]);
   const [loading, setLoading] = useState(true);
   const pageSize = 20;
-  const [searchResults, setSearchResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchParams] = useSearchParams();
   const page = isNaN(parseInt(searchParams.get("page"))) ? 0 : parseInt(searchParams.get("page"));
@@ -18,13 +18,13 @@ const PokemonList = () => {
   useEffect(() => {
     const _ = ( async () =>{
       try {
-        let next = 'https://pokeapi.co/api/v2/pokemon?limit=10&offset=0'
+        let next = 'https://pokeapi.co/api/v2/pokemon?limit=500&offset=0'
         let i = 0;
         let pokemonsData = [];
         while (next !== null) {
           if(i >= 5){
             setPokemonUrls(pokemonsData)
-            throw('too many requests')
+            throw(new Error('too many requests!'))
           }
           i++;
           const {data} = await axios.get(next);
@@ -32,7 +32,7 @@ const PokemonList = () => {
           pokemonsData = pokemonsData.concat(data.results)
         }
         setPokemonUrls(pokemonsData)
-
+        setPokemonPageUrls(pokemonsData)
       } catch (error) {
         console.error("Error fetching pokemons:", error);
       }
@@ -43,7 +43,7 @@ const PokemonList = () => {
     setLoading(true);
     const fetchData = async () => {
       try {
-        const urls = pokemonUrls.slice(pageSize * page, pageSize * page + pageSize);
+        const urls = pokemonPageUrls.slice(pageSize * page, pageSize * page + pageSize);
         const response = await Promise.all(
           urls.map(pokemon => axios.get(pokemon.url))
         );
@@ -54,34 +54,34 @@ const PokemonList = () => {
       }
     };
     fetchData();
-  }, [page, pokemonUrls]);
+  }, [page, pokemonPageUrls]);
 
   useEffect(() => {
-    const results = pokemons.filter((pokemon) =>
-      pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
+    const results = pokemonUrls.filter((pokemon) =>{
+      return pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
+    }
     );
-    setSearchResults(results);
-  }, [searchTerm, pokemons]) 
+    setPokemonPageUrls(results);
+  }, [searchTerm, pokemonUrls]) 
 
-  if (loading) {
-    return <p>Chargement...</p>;
-  } else {
-    return (
-      <div>
-        <div className="searchBar">
-          <SearchBar value ={searchTerm} onSearch={setSearchTerm} />
-        </div>
-        <div className="pokemons-list">
-          {searchTerm
-            ? searchResults.length > 0 
-                ? searchResults.map((pokemon, index) => <PokemonCard pokemon={pokemon} key={index}  />)
-                : <>Aucun pokémon ne corréspond</>
-            : pokemons.map((pokemon, index) => <PokemonCard pokemon={pokemon} key={index}  />)
+  return (
+    <div>
+      <div className="searchBar">
+        <SearchBar value ={searchTerm} onSearch={setSearchTerm} />
+      </div>
+      {loading
+      ? <p>Chargement...</p>
+      : <div className="pokemons-list">
+          {searchTerm && pokemons.length === 0
+            ? <p>Aucun pokémon ne corréspond</p> 
+            : pokemons.length === 0
+              ? <p>Un problème est survenue</p> 
+              : pokemons.map((pokemon, index) => <PokemonCard pokemon={pokemon} key={index}  />)
           }
           <Pagination page={page} />
         </div>
-      </div>
-    );
-  }
+      }
+    </div>
+  );
 };
 export default PokemonList;
